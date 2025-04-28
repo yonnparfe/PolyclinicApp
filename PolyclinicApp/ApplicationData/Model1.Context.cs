@@ -27,9 +27,12 @@ namespace PolyclinicApp.ApplicationData
     
         public virtual DbSet<Doctors> Doctors { get; set; }
         public virtual DbSet<Medical_Cards> Medical_Cards { get; set; }
+        public virtual DbSet<Procedures_Schedule> Procedures_Schedule { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Specializations> Specializations { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tickets> Tickets { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Work_Schedule> Work_Schedule { get; set; }
     }
 }

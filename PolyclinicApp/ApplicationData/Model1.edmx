@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище PolyclinicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище PolyclinicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Doctors">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,13 +32,34 @@
           <Property Name="Entrance" Type="int" />
           <Property Name="Flat" Type="int" Nullable="false" />
           <Property Name="Home_Phone_Number" Type="int" />
-          <Property Name="Mobile_Phone" Type="int" Nullable="false" />
+          <Property Name="Mobile_Phone" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Place_Work" Type="varchar(max)" />
           <Property Name="Work_Address" Type="varchar(max)" />
           <Property Name="Position" Type="varchar" MaxLength="50" />
           <Property Name="Work_Phone" Type="int" />
           <Property Name="Note" Type="varchar(max)" />
           <Property Name="Shelving_Id" Type="int" Nullable="false" />
+          <Property Name="Users_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Procedures_Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="NumRoom" Type="int" Nullable="false" />
+          <Property Name="Monday" Type="varchar" MaxLength="50" />
+          <Property Name="Tuesday" Type="varchar" MaxLength="50" />
+          <Property Name="Wednesday" Type="varchar" MaxLength="50" />
+          <Property Name="Thursday" Type="varchar" MaxLength="50" />
+          <Property Name="Friday" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Specializations">
           <Key>
@@ -68,6 +89,15 @@
           <Property Name="Date_Time_Admission" Type="datetime" Nullable="false" />
           <Property Name="Med_Card_Id" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Work_Schedule">
           <Key>
             <PropertyRef Name="Id" />
@@ -75,11 +105,12 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Number_Med_District" Type="int" />
           <Property Name="Doctor_Id" Type="int" Nullable="false" />
-          <Property Name="Monday" Type="datetime" />
-          <Property Name="Tuesday" Type="datetime" />
-          <Property Name="Wednesday" Type="datetime" />
-          <Property Name="Thursday" Type="datetime" />
-          <Property Name="Friday" Type="datetime" />
+          <Property Name="Monday" Type="varchar" MaxLength="50" />
+          <Property Name="Tuesday" Type="varchar" MaxLength="50" />
+          <Property Name="Wednesday" Type="varchar" MaxLength="50" />
+          <Property Name="Thursday" Type="varchar" MaxLength="50" />
+          <Property Name="Friday" Type="varchar" MaxLength="50" />
+          <Property Name="Room_Number" Type="int" />
         </EntityType>
         <Association Name="FK_Doctors_Specializations">
           <End Role="Specializations" Type="Self.Specializations" Multiplicity="1" />
@@ -90,6 +121,18 @@
             </Principal>
             <Dependent Role="Doctors">
               <PropertyRef Name="Specialization_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Medical_Cards_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Medical_Cards" Type="Self.Medical_Cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medical_Cards">
+              <PropertyRef Name="Users_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -114,6 +157,18 @@
             </Principal>
             <Dependent Role="Tickets">
               <PropertyRef Name="Med_Card_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -132,13 +187,20 @@
         <EntityContainer Name="Хранилище PolyclinicModelContainer">
           <EntitySet Name="Doctors" EntityType="Self.Doctors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Medical_Cards" EntityType="Self.Medical_Cards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Procedures_Schedule" EntityType="Self.Procedures_Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Specializations" EntityType="Self.Specializations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Work_Schedule" EntityType="Self.Work_Schedule" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Doctors_Specializations" Association="Self.FK_Doctors_Specializations">
             <End Role="Specializations" EntitySet="Specializations" />
             <End Role="Doctors" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medical_Cards_Users" Association="Self.FK_Medical_Cards_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Medical_Cards" EntitySet="Medical_Cards" />
           </AssociationSet>
           <AssociationSet Name="FK_Tickets_Doctors" Association="Self.FK_Tickets_Doctors">
             <End Role="Doctors" EntitySet="Doctors" />
@@ -148,28 +210,66 @@
             <End Role="Medical_Cards" EntitySet="Medical_Cards" />
             <End Role="Tickets" EntitySet="Tickets" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_Work_Schedule_Doctors" Association="Self.FK_Work_Schedule_Doctors">
             <End Role="Doctors" EntitySet="Doctors" />
             <End Role="Work_Schedule" EntitySet="Work_Schedule" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PolyclinicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PolyclinicEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Doctors" EntityType="PolyclinicModel.Doctors" />
+          <EntitySet Name="Medical_Cards" EntityType="PolyclinicModel.Medical_Cards" />
+          <EntitySet Name="Procedures_Schedule" EntityType="PolyclinicModel.Procedures_Schedule" />
+          <EntitySet Name="Roles" EntityType="PolyclinicModel.Roles" />
+          <EntitySet Name="Specializations" EntityType="PolyclinicModel.Specializations" />
+          <EntitySet Name="sysdiagrams" EntityType="PolyclinicModel.sysdiagrams" />
+          <EntitySet Name="Tickets" EntityType="PolyclinicModel.Tickets" />
+          <EntitySet Name="Users" EntityType="PolyclinicModel.Users" />
+          <EntitySet Name="Work_Schedule" EntityType="PolyclinicModel.Work_Schedule" />
+          <AssociationSet Name="FK_Doctors_Specializations" Association="PolyclinicModel.FK_Doctors_Specializations">
+            <End Role="Specializations" EntitySet="Specializations" />
+            <End Role="Doctors" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Doctors" Association="PolyclinicModel.FK_Tickets_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Work_Schedule_Doctors" Association="PolyclinicModel.FK_Work_Schedule_Doctors">
+            <End Role="Doctors" EntitySet="Doctors" />
+            <End Role="Work_Schedule" EntitySet="Work_Schedule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Medical_Cards_Users" Association="PolyclinicModel.FK_Medical_Cards_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Medical_Cards" EntitySet="Medical_Cards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tickets_Medical_Cards" Association="PolyclinicModel.FK_Tickets_Medical_Cards">
+            <End Role="Medical_Cards" EntitySet="Medical_Cards" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="PolyclinicModel.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Doctors">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="First_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Specialization_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Specializations" Relationship="Self.FK_Doctors_Specializations" FromRole="Doctors" ToRole="Specializations" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Doctors" FromRole="Doctors" ToRole="Tickets" />
-          <NavigationProperty Name="Work_Schedule" Relationship="Self.FK_Work_Schedule_Doctors" FromRole="Doctors" ToRole="Work_Schedule" />
+          <NavigationProperty Name="Specializations" Relationship="PolyclinicModel.FK_Doctors_Specializations" FromRole="Doctors" ToRole="Specializations" />
+          <NavigationProperty Name="Tickets" Relationship="PolyclinicModel.FK_Tickets_Doctors" FromRole="Doctors" ToRole="Tickets" />
+          <NavigationProperty Name="Work_Schedule" Relationship="PolyclinicModel.FK_Work_Schedule_Doctors" FromRole="Doctors" ToRole="Work_Schedule" />
         </EntityType>
         <EntityType Name="Medical_Cards">
           <Key>
@@ -178,38 +278,61 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Number_Med_Card" Type="Int32" Nullable="false" />
           <Property Name="Number_Med_District" Type="Int32" Nullable="false" />
-          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="First_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date_Birth" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="House" Type="Int32" Nullable="false" />
           <Property Name="Entrance" Type="Int32" />
           <Property Name="Flat" Type="Int32" Nullable="false" />
           <Property Name="Home_Phone_Number" Type="Int32" />
-          <Property Name="Mobile_Phone" Type="Int32" Nullable="false" />
+          <Property Name="Mobile_Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Place_Work" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Work_Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Work_Phone" Type="Int32" />
           <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Shelving_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Medical_Cards" FromRole="Medical_Cards" ToRole="Tickets" />
+          <Property Name="Users_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="PolyclinicModel.FK_Medical_Cards_Users" FromRole="Medical_Cards" ToRole="Users" />
+          <NavigationProperty Name="Tickets" Relationship="PolyclinicModel.FK_Tickets_Medical_Cards" FromRole="Medical_Cards" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="Procedures_Schedule">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NumRoom" Type="Int32" Nullable="false" />
+          <Property Name="Monday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tuesday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Wednesday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Thursday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Friday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="PolyclinicModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
         </EntityType>
         <EntityType Name="Specializations">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name_Specialization" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Doctors" Relationship="Self.FK_Doctors_Specializations" FromRole="Specializations" ToRole="Doctors" />
+          <Property Name="Name_Specialization" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctors" Relationship="PolyclinicModel.FK_Doctors_Specializations" FromRole="Specializations" ToRole="Doctors" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="principal_id" Type="Int32" Nullable="false" />
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
@@ -225,8 +348,19 @@
           <Property Name="Cabinet_Number" Type="Int32" Nullable="false" />
           <Property Name="Date_Time_Admission" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Med_Card_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Doctors" Relationship="Self.FK_Tickets_Doctors" FromRole="Tickets" ToRole="Doctors" />
-          <NavigationProperty Name="Medical_Cards" Relationship="Self.FK_Tickets_Medical_Cards" FromRole="Tickets" ToRole="Medical_Cards" />
+          <NavigationProperty Name="Doctors" Relationship="PolyclinicModel.FK_Tickets_Doctors" FromRole="Tickets" ToRole="Doctors" />
+          <NavigationProperty Name="Medical_Cards" Relationship="PolyclinicModel.FK_Tickets_Medical_Cards" FromRole="Tickets" ToRole="Medical_Cards" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Medical_Cards" Relationship="PolyclinicModel.FK_Medical_Cards_Users" FromRole="Users" ToRole="Medical_Cards" />
+          <NavigationProperty Name="Roles" Relationship="PolyclinicModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
         </EntityType>
         <EntityType Name="Work_Schedule">
           <Key>
@@ -235,16 +369,17 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Number_Med_District" Type="Int32" />
           <Property Name="Doctor_Id" Type="Int32" Nullable="false" />
-          <Property Name="Monday" Type="DateTime" Precision="3" />
-          <Property Name="Tuesday" Type="DateTime" Precision="3" />
-          <Property Name="Wednesday" Type="DateTime" Precision="3" />
-          <Property Name="Thursday" Type="DateTime" Precision="3" />
-          <Property Name="Friday" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Doctors" Relationship="Self.FK_Work_Schedule_Doctors" FromRole="Work_Schedule" ToRole="Doctors" />
+          <Property Name="Monday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tuesday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Wednesday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Thursday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Friday" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Room_Number" Type="Int32" />
+          <NavigationProperty Name="Doctors" Relationship="PolyclinicModel.FK_Work_Schedule_Doctors" FromRole="Work_Schedule" ToRole="Doctors" />
         </EntityType>
         <Association Name="FK_Doctors_Specializations">
-          <End Role="Specializations" Type="Self.Specializations" Multiplicity="1" />
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="*" />
+          <End Type="PolyclinicModel.Specializations" Role="Specializations" Multiplicity="1" />
+          <End Type="PolyclinicModel.Doctors" Role="Doctors" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Specializations">
               <PropertyRef Name="Id" />
@@ -255,8 +390,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Tickets_Doctors">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <End Type="PolyclinicModel.Doctors" Role="Doctors" Multiplicity="1" />
+          <End Type="PolyclinicModel.Tickets" Role="Tickets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctors">
               <PropertyRef Name="Id" />
@@ -267,8 +402,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Work_Schedule_Doctors">
-          <End Role="Doctors" Type="Self.Doctors" Multiplicity="1" />
-          <End Role="Work_Schedule" Type="Self.Work_Schedule" Multiplicity="*" />
+          <End Type="PolyclinicModel.Doctors" Role="Doctors" Multiplicity="1" />
+          <End Type="PolyclinicModel.Work_Schedule" Role="Work_Schedule" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Doctors">
               <PropertyRef Name="Id" />
@@ -278,9 +413,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Medical_Cards_Users">
+          <End Type="PolyclinicModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="PolyclinicModel.Medical_Cards" Role="Medical_Cards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Medical_Cards">
+              <PropertyRef Name="Users_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tickets_Medical_Cards">
-          <End Role="Medical_Cards" Type="Self.Medical_Cards" Multiplicity="1" />
-          <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+          <End Type="PolyclinicModel.Medical_Cards" Role="Medical_Cards" Multiplicity="1" />
+          <End Type="PolyclinicModel.Tickets" Role="Tickets" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Medical_Cards">
               <PropertyRef Name="Id" />
@@ -290,31 +437,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PolyclinicEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Doctors" EntityType="Self.Doctors" />
-          <EntitySet Name="Medical_Cards" EntityType="Self.Medical_Cards" />
-          <EntitySet Name="Specializations" EntityType="Self.Specializations" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Tickets" EntityType="Self.Tickets" />
-          <EntitySet Name="Work_Schedule" EntityType="Self.Work_Schedule" />
-          <AssociationSet Name="FK_Doctors_Specializations" Association="Self.FK_Doctors_Specializations">
-            <End Role="Specializations" EntitySet="Specializations" />
-            <End Role="Doctors" EntitySet="Doctors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tickets_Doctors" Association="Self.FK_Tickets_Doctors">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Work_Schedule_Doctors" Association="Self.FK_Work_Schedule_Doctors">
-            <End Role="Doctors" EntitySet="Doctors" />
-            <End Role="Work_Schedule" EntitySet="Work_Schedule" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tickets_Medical_Cards" Association="Self.FK_Tickets_Medical_Cards">
-            <End Role="Medical_Cards" EntitySet="Medical_Cards" />
-            <End Role="Tickets" EntitySet="Tickets" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK_Users_Roles">
+          <End Type="PolyclinicModel.Roles" Role="Roles" Multiplicity="1" />
+          <End Type="PolyclinicModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -323,82 +458,116 @@
           <EntitySetMapping Name="Doctors">
             <EntityTypeMapping TypeName="PolyclinicModel.Doctors">
               <MappingFragment StoreEntitySet="Doctors">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
-                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="Specialization_Id" ColumnName="Specialization_Id" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Medical_Cards">
             <EntityTypeMapping TypeName="PolyclinicModel.Medical_Cards">
               <MappingFragment StoreEntitySet="Medical_Cards">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Number_Med_Card" ColumnName="Number_Med_Card" />
-                <ScalarProperty Name="Number_Med_District" ColumnName="Number_Med_District" />
-                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
-                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="Date_Birth" ColumnName="Date_Birth" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="House" ColumnName="House" />
-                <ScalarProperty Name="Entrance" ColumnName="Entrance" />
-                <ScalarProperty Name="Flat" ColumnName="Flat" />
-                <ScalarProperty Name="Home_Phone_Number" ColumnName="Home_Phone_Number" />
-                <ScalarProperty Name="Mobile_Phone" ColumnName="Mobile_Phone" />
-                <ScalarProperty Name="Place_Work" ColumnName="Place_Work" />
-                <ScalarProperty Name="Work_Address" ColumnName="Work_Address" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="Work_Phone" ColumnName="Work_Phone" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
                 <ScalarProperty Name="Shelving_Id" ColumnName="Shelving_Id" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Work_Phone" ColumnName="Work_Phone" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Work_Address" ColumnName="Work_Address" />
+                <ScalarProperty Name="Place_Work" ColumnName="Place_Work" />
+                <ScalarProperty Name="Mobile_Phone" ColumnName="Mobile_Phone" />
+                <ScalarProperty Name="Home_Phone_Number" ColumnName="Home_Phone_Number" />
+                <ScalarProperty Name="Flat" ColumnName="Flat" />
+                <ScalarProperty Name="Entrance" ColumnName="Entrance" />
+                <ScalarProperty Name="House" ColumnName="House" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Date_Birth" ColumnName="Date_Birth" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Number_Med_District" ColumnName="Number_Med_District" />
+                <ScalarProperty Name="Number_Med_Card" ColumnName="Number_Med_Card" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Procedures_Schedule">
+            <EntityTypeMapping TypeName="PolyclinicModel.Procedures_Schedule">
+              <MappingFragment StoreEntitySet="Procedures_Schedule">
+                <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="NumRoom" ColumnName="NumRoom" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="PolyclinicModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Specializations">
             <EntityTypeMapping TypeName="PolyclinicModel.Specializations">
               <MappingFragment StoreEntitySet="Specializations">
-                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name_Specialization" ColumnName="Name_Specialization" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="PolyclinicModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tickets">
             <EntityTypeMapping TypeName="PolyclinicModel.Tickets">
               <MappingFragment StoreEntitySet="Tickets">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Number_Ticket" ColumnName="Number_Ticket" />
-                <ScalarProperty Name="Doctor_Id" ColumnName="Doctor_Id" />
-                <ScalarProperty Name="Cabinet_Number" ColumnName="Cabinet_Number" />
-                <ScalarProperty Name="Date_Time_Admission" ColumnName="Date_Time_Admission" />
                 <ScalarProperty Name="Med_Card_Id" ColumnName="Med_Card_Id" />
+                <ScalarProperty Name="Date_Time_Admission" ColumnName="Date_Time_Admission" />
+                <ScalarProperty Name="Cabinet_Number" ColumnName="Cabinet_Number" />
+                <ScalarProperty Name="Doctor_Id" ColumnName="Doctor_Id" />
+                <ScalarProperty Name="Number_Ticket" ColumnName="Number_Ticket" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PolyclinicModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Work_Schedule">
             <EntityTypeMapping TypeName="PolyclinicModel.Work_Schedule">
               <MappingFragment StoreEntitySet="Work_Schedule">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Number_Med_District" ColumnName="Number_Med_District" />
-                <ScalarProperty Name="Doctor_Id" ColumnName="Doctor_Id" />
-                <ScalarProperty Name="Monday" ColumnName="Monday" />
-                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
-                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
-                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Room_Number" ColumnName="Room_Number" />
                 <ScalarProperty Name="Friday" ColumnName="Friday" />
+                <ScalarProperty Name="Thursday" ColumnName="Thursday" />
+                <ScalarProperty Name="Wednesday" ColumnName="Wednesday" />
+                <ScalarProperty Name="Tuesday" ColumnName="Tuesday" />
+                <ScalarProperty Name="Monday" ColumnName="Monday" />
+                <ScalarProperty Name="Doctor_Id" ColumnName="Doctor_Id" />
+                <ScalarProperty Name="Number_Med_District" ColumnName="Number_Med_District" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

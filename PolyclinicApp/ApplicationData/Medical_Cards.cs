@@ -33,14 +33,16 @@ namespace PolyclinicApp.ApplicationData
         public Nullable<int> Entrance { get; set; }
         public int Flat { get; set; }
         public Nullable<int> Home_Phone_Number { get; set; }
-        public int Mobile_Phone { get; set; }
+        public string Mobile_Phone { get; set; }
         public string Place_Work { get; set; }
         public string Work_Address { get; set; }
         public string Position { get; set; }
         public Nullable<int> Work_Phone { get; set; }
         public string Note { get; set; }
         public int Shelving_Id { get; set; }
+        public int Users_Id { get; set; }
     
+        public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tickets> Tickets { get; set; }
     }

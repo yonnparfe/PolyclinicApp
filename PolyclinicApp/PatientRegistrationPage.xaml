@@ -1,0 +1,72 @@
+﻿<Page x:Class="PolyclinicApp.PatientRegistrationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PolyclinicApp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Создание медецинской карты">
+
+    <Grid>
+        <ScrollViewer Margin="20">
+            <StackPanel>
+
+                <TextBlock Text="Имя" Margin="10,0,10,0"/>
+                <TextBox x:Name="FirstName" Margin="10"/>
+
+                <TextBlock Text="Фамилия" Margin="10,0,10,0"/>
+                <TextBox x:Name="LastName" Margin="10"/>
+
+                <TextBlock Text="Отчество" Margin="10,0,10,0"/>
+                <TextBox x:Name="MiddleName" Margin="10"/>
+
+                <TextBlock Text="Дата рождения" Margin="10,0,10,0"/>
+                <DatePicker x:Name="BirthDate" Margin="10"/>
+
+                <TextBlock Text="Пол" Margin="10,0,10,0"/>
+                <ComboBox x:Name="Gender" Margin="10">
+                    <ComboBoxItem Content="Мужской"/>
+                    <ComboBoxItem Content="Женский"/>
+                </ComboBox>
+
+                <TextBlock Text="Улица" Margin="10,0,10,0"/>
+                <TextBox x:Name="Street" Margin="10"/>
+
+                <TextBlock Text="Дом" Margin="10,0,10,0"/>
+                <TextBox x:Name="HouseNumber" Margin="10"/>
+
+                <TextBlock Text="Подъезд" Margin="10,0,10,0"/>
+                <TextBox x:Name="Entrance" Margin="10"/>
+
+                <TextBlock Text="Квартира" Margin="10,0,10,0"/>
+                <TextBox x:Name="Apartment" Margin="10"/>
+
+                <TextBlock Text="Домашний телефон" Margin="10,0,10,0"/>
+                <TextBox x:Name="HomePhone" Margin="10"/>
+
+                <TextBlock Text="Мобильный телефон" Margin="10,0,10,0"/>
+                <TextBox x:Name="MobilePhone" Margin="10"/>
+
+                <TextBlock Text="Рабочий телефон" Margin="10,0,10,0"/>
+                <TextBox x:Name="WorkPhone" Margin="10"/>
+
+                <TextBlock Text="Место работы" Margin="10,0,10,0"/>
+                <TextBox x:Name="WorkPlace" Margin="10"/>
+
+                <TextBlock Text="Адрес работы" Margin="10,0,10,0"/>
+                <TextBox x:Name="WorkAddress" Margin="10"/>
+
+                <TextBlock Text="Позиция на работе" Margin="10,0,10,0"/>
+                <TextBox x:Name="Position" Margin="10"/>
+
+                <TextBlock Text="Заметки" Margin="10,0,10,0"/>
+                <TextBox x:Name="Notes" Margin="10" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+
+                <Button Content="Зарегистрировать пациента" Click="RegisterPatient_Click" Margin="10,20,10,0"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+
+</Page>

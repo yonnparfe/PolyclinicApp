@@ -12,18 +12,18 @@ namespace PolyclinicApp.ApplicationData
     using System;
     using System.Collections.Generic;
     
-    public partial class Work_Schedule
+    public partial class Roles
     {
-        public int Id { get; set; }
-        public Nullable<int> Number_Med_District { get; set; }
-        public int Doctor_Id { get; set; }
-        public string Monday { get; set; }
-        public string Tuesday { get; set; }
-        public string Wednesday { get; set; }
-        public string Thursday { get; set; }
-        public string Friday { get; set; }
-        public Nullable<int> Room_Number { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Roles()
+        {
+            this.Users = new HashSet<Users>();
+        }
     
-        public virtual Doctors Doctors { get; set; }
+        public int Id { get; set; }
+        public string NameRole { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

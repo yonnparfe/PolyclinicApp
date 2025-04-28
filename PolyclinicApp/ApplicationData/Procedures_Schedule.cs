@@ -12,18 +12,15 @@ namespace PolyclinicApp.ApplicationData
     using System;
     using System.Collections.Generic;
     
-    public partial class Work_Schedule
+    public partial class Procedures_Schedule
     {
         public int Id { get; set; }
-        public Nullable<int> Number_Med_District { get; set; }
-        public int Doctor_Id { get; set; }
+        public string Name { get; set; }
+        public int NumRoom { get; set; }
         public string Monday { get; set; }
         public string Tuesday { get; set; }
         public string Wednesday { get; set; }
         public string Thursday { get; set; }
         public string Friday { get; set; }
-        public Nullable<int> Room_Number { get; set; }
-    
-        public virtual Doctors Doctors { get; set; }
     }
 }
