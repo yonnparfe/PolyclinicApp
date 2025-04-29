@@ -6,67 +6,95 @@
       xmlns:local="clr-namespace:PolyclinicApp"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Создание медецинской карты">
+      Title="Создание медицинской карты">
 
-    <Grid>
+    <Page.Resources>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6238c7"/>
+            <Setter Property="Foreground" Value= "White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10,20,10,0"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Opacity" Value="0.6"/>
+        </Style>
+
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Foreground" Value="#6238c7"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="Transparent">
+        <Grid Background="White" Opacity ="0.3">
+        </Grid>
         <ScrollViewer Margin="20">
-            <StackPanel>
+            <StackPanel >
 
-                <TextBlock Text="Имя" Margin="10,0,10,0"/>
-                <TextBox x:Name="FirstName" Margin="10"/>
+                <TextBlock Text="Новый пациент" Foreground="#6238c7"  FontWeight="Bold" FontSize="20" Margin="0,0,0,20" HorizontalAlignment="Center" />
 
-                <TextBlock Text="Фамилия" Margin="10,0,10,0"/>
-                <TextBox x:Name="LastName" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Имя"/>
+                <TextBox x:Name="FirstName" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Отчество" Margin="10,0,10,0"/>
-                <TextBox x:Name="MiddleName" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Фамилия"/>
+                <TextBox x:Name="LastName" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Дата рождения" Margin="10,0,10,0"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Отчество"/>
+                <TextBox x:Name="MiddleName" Style="{StaticResource TextBoxStyle}"/>
+
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Дата рождения"/>
                 <DatePicker x:Name="BirthDate" Margin="10"/>
 
-                <TextBlock Text="Пол" Margin="10,0,10,0"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Пол"/>
                 <ComboBox x:Name="Gender" Margin="10">
                     <ComboBoxItem Content="Мужской"/>
                     <ComboBoxItem Content="Женский"/>
                 </ComboBox>
 
-                <TextBlock Text="Улица" Margin="10,0,10,0"/>
-                <TextBox x:Name="Street" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Улица"/>
+                <TextBox x:Name="Street" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Дом" Margin="10,0,10,0"/>
-                <TextBox x:Name="HouseNumber" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Дом"/>
+                <TextBox x:Name="HouseNumber" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Подъезд" Margin="10,0,10,0"/>
-                <TextBox x:Name="Entrance" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Подъезд"/>
+                <TextBox x:Name="Entrance" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Квартира" Margin="10,0,10,0"/>
-                <TextBox x:Name="Apartment" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Квартира"/>
+                <TextBox x:Name="Apartment" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Домашний телефон" Margin="10,0,10,0"/>
-                <TextBox x:Name="HomePhone" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Домашний телефон"/>
+                <TextBox x:Name="HomePhone" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Мобильный телефон" Margin="10,0,10,0"/>
-                <TextBox x:Name="MobilePhone" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Мобильный телефон"/>
+                <TextBox x:Name="MobilePhone" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Рабочий телефон" Margin="10,0,10,0"/>
-                <TextBox x:Name="WorkPhone" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Рабочий телефон"/>
+                <TextBox x:Name="WorkPhone" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Место работы" Margin="10,0,10,0"/>
-                <TextBox x:Name="WorkPlace" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Место работы"/>
+                <TextBox x:Name="WorkPlace" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Адрес работы" Margin="10,0,10,0"/>
-                <TextBox x:Name="WorkAddress" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Адрес работы"/>
+                <TextBox x:Name="WorkAddress" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Позиция на работе" Margin="10,0,10,0"/>
-                <TextBox x:Name="Position" Margin="10"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Позиция на работе"/>
+                <TextBox x:Name="Position" Style="{StaticResource TextBoxStyle}"/>
 
-                <TextBlock Text="Заметки" Margin="10,0,10,0"/>
-                <TextBox x:Name="Notes" Margin="10" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                <TextBlock Style="{StaticResource TextBlockStyle}" Text="Заметки"/>
+                <TextBox x:Name="Notes" Style="{StaticResource TextBoxStyle}" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
 
-                <Button Content="Зарегистрировать пациента" Click="RegisterPatient_Click" Margin="10,20,10,0"/>
+                <Button Content="Зарегистрировать пациента" Style="{StaticResource ButtonStyle}" Click="RegisterPatient_Click"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
-
-
 </Page>
+

@@ -45,15 +45,7 @@ namespace PolyclinicApp
             MainFrame.Navigate(new SchedulePage());
         }
 
-        //private void btnTestsClick(object sender, RoutedEventArgs e)
-        //{
-        //    MainFrame.Navigate(new MedicalTestsPage());
-        //}
 
-        //private void btnSettingsClick(object sender, RoutedEventArgs e)
-        //{
-        //    MainFrame.Navigate(new SettingsPage());
-        //}
 
       
 

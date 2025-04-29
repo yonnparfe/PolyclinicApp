@@ -5,114 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PolyclinicApp"
         mc:Ignorable="d"
-        Title="Главное окно" Height="600" Width="800">
+        Title="Главное окно" Height="600" Width="1000">
 
     <Window.Resources>
-        <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#49678D"/>
-        <SolidColorBrush x:Key="ButtonForegroundColor" Color="White"/>
-
-
+        <SolidColorBrush x:Key="ButtonBackgroundColor" Color="White"/>
+        <SolidColorBrush x:Key="ButtonForegroundColor" Color="#6238c7"/>
 
         <Style TargetType="Button">
             <Setter Property="Background" Value="{StaticResource ButtonBackgroundColor}"/>
             <Setter Property="Foreground" Value="{StaticResource ButtonForegroundColor}"/>
             <Setter Property="FontFamily" Value="Segoe UI; Arial; sans-serif"/>
-            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontSize" Value="11"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="Margin" Value="0,10"/>
             <Setter Property="Padding" Value="5"/>
-            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+
+        <Style x:Key="ButtonBorderStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="5"/>
         </Style>
     </Window.Resources>
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/background-gradient.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Border CornerRadius="10" Background="White" Margin="20">
-            <StackPanel Grid.Column="0" Background="#FFFAFA" Margin="10">
-                <Button  Click="btnRegisterPatientsClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                    <Border>
+        <Border CornerRadius="10" Margin="20">
+            <StackPanel Grid.Column="0" Margin="10">
+                <Button Click="btnRegisterPatientsClick">
+                    <Border Style="{StaticResource ButtonBorderStyle}">
                         <ContentPresenter Content="Регистрация пациентов" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </Button>
 
-                <Button  Click="btnMedicalCardsClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                    <Border>
+                <Button Click="btnMedicalCardsClick">
+                    <Border Style="{StaticResource ButtonBorderStyle}">
                         <ContentPresenter Content="Медицинские карты" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </Button>
 
-                <Button  Click="btnAppointmentClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                    <Border>
+                <Button Click="btnAppointmentClick">
+                    <Border Style="{StaticResource ButtonBorderStyle}">
                         <ContentPresenter Content="Запись на прием" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </Button>
 
-                <Button  Click="btnSchedulesClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                    <Border>
+                <Button Click="btnSchedulesClick">
+                    <Border Style="{StaticResource ButtonBorderStyle}">
                         <ContentPresenter Content="Расписания" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </Button>
-
-                <!--<Button  Click="btnTestsClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                    <Border>
-                        <ContentPresenter Content="Анализы" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </Button>-->
-
-                <!--<Button  Click="btnSettingsClick">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="5"/>
-                        </Style>
-                    </Button.Resources>
-                    
-                    <Border>
-                        <ContentPresenter Content="Настройки" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    
-                </Button>-->
             </StackPanel>
         </Border>
 
         <Grid Grid.Column="1">
-            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Background="#FFFFFF"/>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>
-
-
-
-
-
-
-
 
 </Window>

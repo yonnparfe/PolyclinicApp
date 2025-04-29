@@ -27,20 +27,28 @@ namespace PolyclinicApp
             LoadMedCard();
         }
 
-
         private void LoadMedCard()
         {
             MedicalCardsDataGrid.ItemsSource = AppConnect.modelOdb.Medical_Cards.ToList();
-
         }
 
         private void OpenMedCardClick(object sender, RoutedEventArgs e)
         {
-            Frame mainFrame = Application.Current.MainWindow.FindName("MainFrame") as Frame;
-            if (mainFrame != null)
+            var selectedPatient = MedicalCardsDataGrid.SelectedItem as Medical_Cards;
+            if (selectedPatient != null)
             {
-                mainFrame.Navigate(new PatientMedCardPage());
+                Frame mainFrame = Application.Current.MainWindow.FindName("MainFrame") as Frame;
+                if (mainFrame != null)
+                {
+                    mainFrame.Navigate(new PatientMedCardPage(selectedPatient));
+                }
+            }
+            else
+            {
+                
+                MessageBox.Show("Пожалуйста, выберите пациента.");
             }
         }
     }
 }
+

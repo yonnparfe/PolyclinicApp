@@ -12,6 +12,7 @@
         <TextBlock Text="Добро пожаловать"
                    FontSize="36"
                    HorizontalAlignment="Center"
+                   Foreground ="White"
                    VerticalAlignment="Center"/>
     </Grid>
 </Page>

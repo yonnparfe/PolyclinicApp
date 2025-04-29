@@ -21,8 +21,8 @@ namespace PolyclinicApp.ApplicationData
         }
     
         public int Id { get; set; }
-        public int Number_Med_Card { get; set; }
-        public int Number_Med_District { get; set; }
+        public Nullable<int> Number_Med_Card { get; set; }
+        public Nullable<int> Number_Med_District { get; set; }
         public string Last_Name { get; set; }
         public string First_Name { get; set; }
         public string Patronymic { get; set; }
@@ -32,15 +32,15 @@ namespace PolyclinicApp.ApplicationData
         public int House { get; set; }
         public Nullable<int> Entrance { get; set; }
         public int Flat { get; set; }
-        public Nullable<int> Home_Phone_Number { get; set; }
+        public string Home_Phone_Number { get; set; }
         public string Mobile_Phone { get; set; }
         public string Place_Work { get; set; }
         public string Work_Address { get; set; }
         public string Position { get; set; }
-        public Nullable<int> Work_Phone { get; set; }
+        public string Work_Phone { get; set; }
         public string Note { get; set; }
-        public int Shelving_Id { get; set; }
-        public int Users_Id { get; set; }
+        public Nullable<int> Shelving_Id { get; set; }
+        public Nullable<int> Users_Id { get; set; }
     
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

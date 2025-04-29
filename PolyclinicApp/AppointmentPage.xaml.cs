@@ -26,34 +26,32 @@ namespace PolyclinicApp
         public AppointmentPage()
         {
             InitializeComponent();
-            LoadTicket();
-
+            LoadDoctors();
+            LoadPatients();
         }
 
-        private void LoadTicket()
+        private void LoadDoctors()
         {
-            var tickets = AppConnect.modelOdb.Tickets.Include(t => t.Medical_Cards).Include(t => t.Doctors).ToList();
-
-            var doctorNames = new List<string>();
-            var patientNames = new List<string>();
-
-            foreach (var ticket in tickets)
+            var doctors = AppConnect.modelOdb.Doctors.ToList();
+            DoctorComboBox.ItemsSource = doctors.Select(d => new
             {
-                if (ticket.Doctors != null)
-                {
-                    string doctorFullName = $"{ticket.Doctors.First_Name} {ticket.Doctors.Last_Name}";
-                    doctorNames.Add(doctorFullName);
-                }
+                Id = d.Id,
+                FullName = $"{d.Last_Name} {d.First_Name} {d.Patronymic}"
+            }).ToList();
+            DoctorComboBox.DisplayMemberPath = "FullName";
+            DoctorComboBox.SelectedValuePath = "Id";
+        }
 
-                if (ticket.Medical_Cards != null && ticket.Medical_Cards != null)
-                {
-                    string patientFullName = $"{ticket.Medical_Cards.First_Name} {ticket.Medical_Cards.Last_Name}";
-                    patientNames.Add(patientFullName);
-                }
-            }
-
-            DoctorComboBox.ItemsSource = doctorNames;
-            PatientComboBox.ItemsSource = patientNames;
+        private void LoadPatients()
+        {
+            var patients = AppConnect.modelOdb.Medical_Cards.ToList();
+            PatientComboBox.ItemsSource = patients.Select(p => new
+            {
+                Id = p.Id,
+                FullName = $"{p.Last_Name} {p.First_Name} {p.Patronymic}"
+            }).ToList();
+            PatientComboBox.DisplayMemberPath = "FullName";
+            PatientComboBox.SelectedValuePath = "Id";
         }
 
         private void SubmitAppointment_Click(object sender, RoutedEventArgs e)
@@ -62,26 +60,28 @@ namespace PolyclinicApp
             {
                 var appointmentDate = AppointmentDate.SelectedDate;
 
-                var hour = HourComboBox.SelectedItem as ComboBoxItem;
-                var minute = MinuteComboBox.SelectedItem as ComboBoxItem;
+                if (!appointmentDate.HasValue || HourComboBox.SelectedItem == null || MinuteComboBox.SelectedItem == null)
+                {
+                    MessageBox.Show("Пожалуйста, убедитесь, что вы выбрали дату и время!", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-                var appointmentTime = new DateTime(appointmentDate.Value.Year, appointmentDate.Value.Month, appointmentDate.Value.Day,
-                                                    int.Parse(hour.Content.ToString()), int.Parse(minute.Content.ToString()), 0);
+                var hour = int.Parse((HourComboBox.SelectedItem as ComboBoxItem)?.Content.ToString());
+                var minute = int.Parse((MinuteComboBox.SelectedItem as ComboBoxItem)?.Content.ToString());
 
-                string selectedDoctor = (DoctorComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-                var existingDoctor = AppConnect.modelOdb.Doctors.FirstOrDefault(d =>
-                    d.First_Name + " " + d.Last_Name + " " + d.Patronymic == selectedDoctor);
+                var appointmentTime = new DateTime(appointmentDate.Value.Year, appointmentDate.Value.Month, appointmentDate.Value.Day, hour, minute, 0);
 
-                string selectedPatient = (PatientComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
-                var existingPatient = AppConnect.modelOdb.Medical_Cards.FirstOrDefault(p =>
-                    p.First_Name + " " + p.Last_Name + " " + p.Patronymic == selectedPatient);
+                var selectedDoctorId = (int)(DoctorComboBox.SelectedValue ?? 0);
+                var selectedPatientId = (int)(PatientComboBox.SelectedValue ?? 0);
+
+                var existingDoctor = AppConnect.modelOdb.Doctors.Find(selectedDoctorId);
+                var existingPatient = AppConnect.modelOdb.Medical_Cards.Find(selectedPatientId);
 
                 if (existingDoctor == null || existingPatient == null)
                 {
                     MessageBox.Show("Выберите корректного врача и пациента.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-
 
                 var newTicket = new Tickets
                 {
@@ -95,7 +95,6 @@ namespace PolyclinicApp
                 AppConnect.modelOdb.SaveChanges();
 
                 MessageBox.Show("Вы успешно записались на прием!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
             }
             catch (Exception ex)
             {

@@ -7,16 +7,69 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PatientMedCardPage">
+    <Page.Resources>
+        <Style x:Key="HeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Foreground" Value="#6238c7"/>
+        </Style>
 
+        <Style x:Key="LabelTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Foreground" Value="#6238c7"/>
+        </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#6238c7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Opacity" Value="0.9"/>
+        </Style>
+
+        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+            <Setter Property="Foreground" Value="#6238c7"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6238c7"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="10,20,10,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Opacity" Value="0.8"/>
+        </Style>
+
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Margin" Value="10,0,0,10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="#6238c7"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Opacity" Value="0.9"/>
+        </Style>
+        
+        
+    </Page.Resources>
+    
     <TabControl x:Name="MedCardTabControl">
         <TabItem Header="Главная страница">
             <StackPanel>
-                <TextBlock Text="Номер карты:" />
-                <TextBlock Text="{Binding Number_Med_Card}" />
-                <TextBlock Text="Участок:" />
-                <TextBlock Text="{Binding Number_Med_District}" />
-                <TextBlock Text="ФИО:" />
-                <TextBlock>
+                <TextBlock Text="Номер карты:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Number_Med_Card}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Участок:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Number_Med_District}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="ФИО:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Style="{StaticResource TextBlockStyle}">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} {1} {2}">
                             <Binding Path="Last_Name" />
@@ -26,118 +79,132 @@
                     </TextBlock.Text>
                 </TextBlock>
 
-                <TextBlock Text="Дата рождения:" />
-                <TextBlock Text="{Binding Date_Birth}" />
-                <TextBlock Text="Пол:" />
-                <TextBlock Text="{Binding Gender}" />
-                <TextBlock Text="Мобильный телефон:" />
-                <TextBlock Text="{Binding Mobile_Phone}" />
+                <TextBlock Text="Дата рождения:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Date_Birth}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Пол:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Gender}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Мобильный телефон:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Mobile_Phone}" Style="{StaticResource TextBlockStyle}" />
             </StackPanel>
         </TabItem>
+
 
         <TabItem Header="Место жительства">
             <StackPanel>
-                <TextBlock Text="Улица:" />
-                <TextBlock Text="{Binding Street}" />
-                <TextBlock Text="Дом:" />
-                <TextBlock Text="{Binding House}" />
-                <TextBlock Text="Подъезд:" />
-                <TextBlock Text="{Binding Entrance}" />
-                <TextBlock Text="Квартира:" />
-                <TextBlock Text="{Binding Flat}" />
-                <TextBlock Text="Домашний телефон:" />
-                <TextBlock Text="{Binding Home_Phone_Number}" />
+                <TextBlock Text="Улица:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Street}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Дом:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding House}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Подъезд:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Entrance}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Квартира:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Flat}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Домашний телефон:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Home_Phone_Number}" Style="{StaticResource TextBlockStyle}" />
             </StackPanel>
         </TabItem>
 
+
         <TabItem Header="Место работы">
             <StackPanel>
-                <TextBlock Text="Место работы:" />
-                <TextBlock Text="{Binding Place_Work}" />
-                <TextBlock Text="Адрес работы:" />
-                <TextBlock Text="{Binding Work_Address}" />
-                <TextBlock Text="Позиция:" />
-                <TextBlock Text="{Binding Position}" />
-                <TextBlock Text="Рабочий телефон:" />
-                <TextBlock Text="{Binding Work_Phone}" />
+                <TextBlock Text="Место работы:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Place_Work}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Адрес работы:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Work_Address}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Позиция:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Position}" Style="{StaticResource TextBlockStyle}" />
+
+                <TextBlock Text="Рабочий телефон:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Work_Phone}" Style="{StaticResource TextBlockStyle}" />
             </StackPanel>
         </TabItem>
 
         <TabItem Header="Дополнительно">
             <StackPanel>
-                <TextBlock Text="Примечания:" />
-                <TextBlock Text="{Binding Note}" />
+                <TextBlock Text="Примечания:" Style="{StaticResource TextBlockStyle}" />
+                <TextBlock Text="{Binding Note}" Style="{StaticResource TextBlockStyle}" />
             </StackPanel>
         </TabItem>
+
         <TabItem Header="Редактировать">
             <ScrollViewer Margin="20">
                 <StackPanel>
-                    <TextBlock Text="Данные пациента" FontSize="20" FontWeight="Bold" Margin="10,0,10,20"/>
+                    <TextBlock Text="Данные пациента" Foreground="#6238c7" FontSize="20" FontWeight="Bold" Margin="10,0,10,20"/>
 
-                    <TextBlock Text="Имя" Margin="10,0,10,0"/>
-                    <TextBox x:Name="FirstName" Margin="10"/>
+                    <TextBlock Text="Имя" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="FirstName" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Фамилия" Margin="10,0,10,0"/>
-                    <TextBox x:Name="LastName" Margin="10"/>
+                    <TextBlock Text="Фамилия" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="LastName" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Отчество" Margin="10,0,10,0"/>
-                    <TextBox x:Name="MiddleName" Margin="10"/>
+                    <TextBlock Text="Отчество" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="MiddleName" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Дата рождения" Margin="10,0,10,0"/>
+                    <TextBlock Text="Дата рождения" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
                     <DatePicker x:Name="BirthDate" Margin="10"/>
 
-                    <TextBlock Text="Пол" Margin="10,0,10,0"/>
-                    <ComboBox x:Name="Gender" Margin="10">
+                    <TextBlock Text="Пол" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <ComboBox x:Name="Gender" Margin="10" Style="{StaticResource ComboBoxStyle}">
                         <ComboBoxItem Content="Мужской"/>
                         <ComboBoxItem Content="Женский"/>
                     </ComboBox>
 
-                    <TextBlock Text="Улица" Margin="10,0,10,0"/>
-                    <TextBox x:Name="Street" Margin="10"/>
+                    <TextBlock Text="Улица" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="Street" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Дом" Margin="10,0,10,0"/>
-                    <TextBox x:Name="HouseNumber" Margin="10"/>
+                    <TextBlock Text="Дом" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="HouseNumber" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Подъезд" Margin="10,0,10,0"/>
-                    <TextBox x:Name="Entrance" Margin="10"/>
+                    <TextBlock Text="Подъезд" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="Entrance" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Квартира" Margin="10,0,10,0"/>
-                    <TextBox x:Name="Apartment" Margin="10"/>
+                    <TextBlock Text="Квартира" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="Apartment" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Домашний телефон" Margin="10,0,10,0"/>
-                    <TextBox x:Name="HomePhone" Margin="10"/>
+                    <TextBlock Text="Домашний телефон" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="HomePhone" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Мобильный телефон" Margin="10,0,10,0"/>
-                    <TextBox x:Name="MobilePhone" Margin="10"/>
+                    <TextBlock Text="Мобильный телефон" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="MobilePhone" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Рабочий телефон" Margin="10,0,10,0"/>
-                    <TextBox x:Name="WorkPhone" Margin="10"/>
+                    <TextBlock Text="Рабочий телефон" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="WorkPhone" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Место работы" Margin="10,0,10,0"/>
-                    <TextBox x:Name="WorkPlace" Margin="10"/>
+                    <TextBlock Text="Место работы" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="WorkPlace" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Адрес работы" Margin="10,0,10,0"/>
-                    <TextBox x:Name="WorkAddress" Margin="10"/>
+                    <TextBlock Text="Адрес работы" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="WorkAddress" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Позиция на работе" Margin="10,0,10,0"/>
-                    <TextBox x:Name="Position" Margin="10"/>
+                    <TextBlock Text="Позиция на работе" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="Position" Margin="10" Style="{StaticResource TextBoxStyle}"/>
 
-                    <TextBlock Text="Заметки" Margin="10,0,10,0"/>
-                    <TextBox x:Name="Notes" Margin="10" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                    <TextBlock Text="Заметки" Margin="10,0,10,0" Style="{StaticResource LabelTextStyle}"/>
+                    <TextBox x:Name="Notes" Margin="10" Height="60" TextWrapping="Wrap" AcceptsReturn="True" Style="{StaticResource TextBoxStyle}"/>
 
-                    <Button Content="Сохранить изменения" Click="SaveChangesPatient_Click" Margin="10,20,10,0"/>
+                    <Button Content="Сохранить изменения" Click="SaveChangesPatient_Click" Margin="10,20,10,0" Style="{StaticResource ButtonStyle}"/>
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
 
+
         <TabItem Header="Удалить">
             <StackPanel>
-                <TextBlock Text="Удалить пациента?" />
+                <TextBlock Text="Удалить пациента?" Style="{StaticResource HeaderTextStyle}"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button Height="30" Width="120" Click="DeleteCard_Click">Удалить</Button>
+                    <Button Height="30" Width="120" Click="DeleteCard_Click" Style="{StaticResource ButtonStyle}">Удалить</Button>
                 </StackPanel>
             </StackPanel>
         </TabItem>
+
     </TabControl>
 
 

@@ -21,69 +21,78 @@ namespace PolyclinicApp
     /// </summary>
     public partial class PatientMedCardPage : Page
     {
-        public PatientMedCardPage()
+        public PatientMedCardPage(Medical_Cards patient)
         {
             InitializeComponent();
-            LoadMedCard();
+            
+            DataContext = patient;
         }
 
-        private void LoadMedCard()
-        {
-            var selectedPatient = AppConnect.modelOdb.Medical_Cards.FirstOrDefault(); 
-            if (selectedPatient != null)
-            {
-                DataContext = selectedPatient; 
-            }
-
-        }
 
         private void DeleteCard_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Вы действительно хотите удалить карту?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
             {
-                var SelectedItem = MedCardTabControl.SelectedItem as Medical_Cards;
-                AppConnect.modelOdb.Medical_Cards.Remove(SelectedItem);
-                AppConnect.modelOdb.SaveChanges();
-                MessageBox.Show("Карта успешно удалена!", "Title", MessageBoxButton.OK, MessageBoxImage.Information);
-                LoadMedCard();
+                var selectedPatient = (Medical_Cards)DataContext;
+                if (selectedPatient != null)
+                {
+                    AppConnect.modelOdb.Medical_Cards.Remove(selectedPatient);
+                    AppConnect.modelOdb.SaveChanges();
+                    MessageBox.Show("Карта успешно удалена!", "Title", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    Frame mainFrame = Application.Current.MainWindow.FindName("MainFrame") as Frame;
+                    if (mainFrame != null)
+                    {
+                        mainFrame.Navigate(new MedicalCardsPage());
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Пациент не выбран.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
+
 
         private void SaveChangesPatient_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                var newMedicalCard = new Medical_Cards
+                var patientToUpdate = (Medical_Cards)DataContext;
+                if (patientToUpdate != null)
                 {
-                    First_Name = FirstName.Text,
-                    Last_Name = LastName.Text,
-                    Patronymic = MiddleName.Text,
-                    Date_Birth = BirthDate.SelectedDate.HasValue ? BirthDate.SelectedDate.Value : DateTime.MinValue,
-                    Gender = (Gender.SelectedItem as ComboBoxItem)?.Content.ToString(),
-                    Street = Street.Text,
-                    House = int.Parse(HouseNumber.Text),
-                    Entrance = int.Parse(Entrance.Text),
-                    Flat = int.Parse(Apartment.Text),
-                    Home_Phone_Number = int.Parse(HomePhone.Text),
-                    Mobile_Phone = MobilePhone.Text,
-                    Work_Phone = int.Parse(WorkPhone.Text),
-                    Place_Work = WorkPlace.Text,
-                    Work_Address = WorkAddress.Text,
-                    Position = Position.Text,
-                    Note = Notes.Text
-                };
+                    
+                    patientToUpdate.First_Name = FirstName.Text;
+                    patientToUpdate.Last_Name = LastName.Text;
+                    patientToUpdate.Patronymic = MiddleName.Text;
+                    patientToUpdate.Date_Birth = BirthDate.SelectedDate.HasValue ? BirthDate.SelectedDate.Value : DateTime.MinValue;
+                    patientToUpdate.Gender = (Gender.SelectedItem as ComboBoxItem)?.Content.ToString();
+                    patientToUpdate.Street = Street.Text;
+                    patientToUpdate.House = int.Parse(HouseNumber.Text);
+                    patientToUpdate.Entrance = int.Parse(Entrance.Text);
+                    patientToUpdate.Flat = int.Parse(Apartment.Text);
+                    patientToUpdate.Home_Phone_Number = HomePhone.Text;
+                    patientToUpdate.Mobile_Phone = MobilePhone.Text;
+                    patientToUpdate.Work_Phone = WorkPhone.Text;
+                    patientToUpdate.Place_Work = WorkPlace.Text;
+                    patientToUpdate.Work_Address = WorkAddress.Text;
+                    patientToUpdate.Position = Position.Text;
+                    patientToUpdate.Note = Notes.Text;
 
+                    AppConnect.modelOdb.SaveChanges();
 
-                
-                AppConnect.modelOdb.SaveChanges();
-
-                MessageBox.Show("Карта успешно обновлена!", "Caption", MessageBoxButton.OK, MessageBoxImage.Information);
-
+                    MessageBox.Show("Карта успешно обновлена!", "Caption", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Пациент не найден для редактирования.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }
