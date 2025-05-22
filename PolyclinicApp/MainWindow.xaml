@@ -22,7 +22,6 @@
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
-
         <Style x:Key="ButtonBorderStyle" TargetType="Border">
             <Setter Property="CornerRadius" Value="5"/>
         </Style>
@@ -62,6 +61,12 @@
                         <ContentPresenter Content="Расписания" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                 </Button>
+
+                <Button Click="btnExitClick" Margin="0,50,0,0">
+                    <Border Style="{StaticResource ButtonBorderStyle}">
+                        <ContentPresenter Content="Выйти" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </Button>
             </StackPanel>
         </Border>
 
@@ -69,5 +74,4 @@
             <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>
-
 </Window>

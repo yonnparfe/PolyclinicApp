@@ -30,15 +30,12 @@ namespace PolyclinicApp
         {
             try
             {
-                
-                
                 if (string.IsNullOrEmpty(LoginTextBox.Text) || string.IsNullOrEmpty(PasswordBox.Password) || RoleComboBox.SelectedItem == null)
                 {
                     MessageBox.Show("Пожалуйста, заполните все поля!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
-               
                 var existingUser = AppConnect.modelOdb.Users.FirstOrDefault(x => x.Login == LoginTextBox.Text);
                 if (existingUser != null)
                 {
@@ -46,26 +43,30 @@ namespace PolyclinicApp
                     return;
                 }
 
-               
                 string roleName = (RoleComboBox.SelectedItem as ComboBoxItem).Content.ToString();
                 var existingRole = AppConnect.modelOdb.Roles.FirstOrDefault(x => x.NameRole == roleName);
 
+                if (existingRole == null)
+                {
+                    // Добавить новую роль в базу данных
+                    existingRole = new Roles() { NameRole = roleName };
+                    AppConnect.modelOdb.Roles.Add(existingRole);
+                    AppConnect.modelOdb.SaveChanges();
+                }
+
                 var newUser = new Users()
                 {
-
                     Login = LoginTextBox.Text,
                     Password = PasswordBox.Password,
                     Role_Id = existingRole.Id
                 };
 
-                
                 AppConnect.modelOdb.Users.Add(newUser);
                 AppConnect.modelOdb.SaveChanges();
 
                 MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 NavigationService.GoBack();
-
             }
             catch (Exception ex)
             {

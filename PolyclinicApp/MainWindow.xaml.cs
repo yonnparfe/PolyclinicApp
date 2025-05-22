@@ -45,9 +45,18 @@ namespace PolyclinicApp
             MainFrame.Navigate(new SchedulePage());
         }
 
+        private void btnExitClick(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите выйти?", "Подтверждение",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-
-      
-
+            if (result == MessageBoxResult.Yes)
+            {
+                var loginWindow = new LoginWindow();
+                loginWindow.Show();
+                this.Close();
+            }
+        }
     }
-}
+    }
+
