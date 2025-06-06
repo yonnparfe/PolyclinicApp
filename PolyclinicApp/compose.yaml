@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  polyclinic-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: polyclinic-app
+    restart: unless-stopped
+    environment:
+      - DISPLAY=${DISPLAY_HOST}:0.0  
+      - SQL_SERVER=${SQL_SERVER:-host.docker.internal\SQLEXPRESS}
+      - DB_NAME=${DB_NAME:-Polyclinic}
+      - SQL_USER=${SQL_USER:-sa}
+      - SQL_PASSWORD=${SQL_PASSWORD:-YourStrong!Passw0rd}
+    volumes:
+      - ${TEMPDIR:-C:/temp}/.X11-unix:/tmp/.X11-unix  
+      - ./AppData:/app/AppData 
+    
+    platform: windows/amd64
+    isolation: process 
+
+
