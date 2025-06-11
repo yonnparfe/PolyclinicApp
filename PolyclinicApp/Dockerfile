@@ -4,13 +4,19 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022 AS bu
 WORKDIR /src
 COPY . .
 
-RUN nuget restore && msbuild /p:Configuration=Release /p:OutputPath=C:\out /p:ValidateMarkup=false
+RUN nuget restore && \
+    msbuild PolyclinicApp.csproj \
+    /p:Configuration=Release \
+    /p:OutputPath=C:\output \
+    /p:ValidateMarkup=false \
+    /p:DeployOnBuild=true \
+    /p:PublishProfile=FolderProfile
 
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2022
 WORKDIR /app
-COPY --from=builder C:\out .
+COPY --from=builder C:/output/. .
 COPY --from=builder C:\src\DataBase .\DataBase
 
 ENV DISPLAY=host.docker.internal:0.0
 
-ENTRYPOINT ["PolyclinicApp.exe"]
+ENTRYPOINT ["C:\\app\\PolyclinicApp.exe"]
