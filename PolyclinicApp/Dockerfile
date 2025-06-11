@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG BASE_IMAGE_TAG=4.8
-FROM mcr.microsoft.com/dotnet/framework/sdk:${BASE_IMAGE_TAG} AS builder
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS builder
 SHELL ["cmd", "/S", "/C"]
 WORKDIR /src
 
@@ -11,7 +10,7 @@ RUN nuget restore PolyclinicApp.csproj
 
 RUN msbuild PolyclinicApp.csproj /p:Configuration=Release /p:OutputPath=C:\out
 
-FROM mcr.microsoft.com/dotnet/framework/runtime:${BASE_IMAGE_TAG}
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8
 WORKDIR /app
 
 RUN powershell -Command \
