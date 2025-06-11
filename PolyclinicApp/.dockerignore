@@ -49,7 +49,7 @@ TestResults/
 
 # 5. Documentation and diagrams
 docs/
-Документация/
+.Документация/
 *.md
 *.uml
 *.bmp
