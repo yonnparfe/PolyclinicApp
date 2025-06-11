@@ -1,18 +1,20 @@
- # syntax=docker/dockerfile:1.0.0
+# syntax=docker/dockerfile:1.0.0
 
-# Сборка
-FROM mcr.microsoft.com/dotnet/framework/sdk:4.8 AS builder
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022 AS builder
+
 WORKDIR /src
 COPY . .
-RUN nuget restore && msbuild PolyclinicApp.csproj /p:Configuration=Release /p:OutputPath=C:\out
+RUN nuget restore PolyclinicApp.csproj && \
+    msbuild PolyclinicApp.csproj /p:Configuration=Release /p:OutputPath=C:\out
 
-# Запуск
-FROM mcr.microsoft.com/dotnet/framework/runtime:4.8
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2022
+
 WORKDIR /app
 
-COPY --from=builder C:/out .
-COPY --from=builder C:/src/DataBase ./DataBase
-COPY --from=builder C:/src/*.config .
+COPY --from=builder C:\out .
+COPY --from=builder C:\src\DataBase .\DataBase
+COPY --from=builder C:\src\*.config .
 
 ENV DISPLAY=host.docker.internal:0.0
-ENTRYPOINT ["powershell", "-ExecutionPolicy", "Bypass", "-File", ".\\init.ps1"]
+
+ENTRYPOINT ["PolyclinicApp.exe"]
