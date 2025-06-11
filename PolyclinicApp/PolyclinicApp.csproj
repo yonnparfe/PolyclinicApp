@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -267,6 +267,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Документация\Диаграммы\диаграмма_классов.png" />
+    <Resource Include="Документация\Диаграммы\диаграмма_последовательности.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="ApplicationData\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -278,6 +282,12 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="DataBase\PolyclinicCreat.sql" />
+    <Content Include="Документация\Диаграммы\connectw.bmp" />
+    <Resource Include="Документация\Диаграммы\fileName.bmp" />
+    <Resource Include="Документация\Диаграммы\execute.bmp" />
+    <Resource Include="Images\background-gradient.jpg" />
+    <Resource Include="Документация\Диаграммы\диаграмма_пакетов.png" />
+    <Resource Include="Документация\Диаграммы\usecase2.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
