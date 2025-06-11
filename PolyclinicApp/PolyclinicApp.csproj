@@ -278,8 +278,6 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
     <Content Include="DataBase\PolyclinicCreat.sql" />
-    <Content Include="Документация\Диаграммы\connectw.bmp" />
-    <Resource Include="Images\background-gradient.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
