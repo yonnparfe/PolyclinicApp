@@ -304,10 +304,27 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\MaterialDesignThemes.5.2.1\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.5.2.1\build\MaterialDesignThemes.targets'))" />
   </Target>
+
 <ItemGroup>
+
   <None Remove="Документация\**" />
   <Content Remove="Документация\**" />
-  <Resource Remove="Документация\**" />
   <EmbeddedResource Remove="Документация\**" />
+  
+
+  <Resource Remove="Документация\Диаграммы\диаграмма_классов.png" />
+  <Resource Remove="Документация\Диаграммы\диаграмма_последовательности.png" />
+  <Resource Remove="Документация\Диаграммы\fileName.bmp" />
+  <Resource Remove="Документация\Диаграммы\execute.bmp" />
+  <Resource Remove="Документация\Диаграммы\диаграмма_пакетов.png" />
+  <Resource Remove="Документация\Диаграммы\usecase2.png" />
+  
+
+  <None Include="Документация\Диаграммы\диаграмма_классов.png" />
+  <None Include="Документация\Диаграммы\диаграмма_последовательности.png" />
+  <None Include="Документация\Диаграммы\fileName.bmp" />
+  <None Include="Документация\Диаграммы\execute.bmp" />
+  <None Include="Документация\Диаграммы\диаграмма_пакетов.png" />
+  <None Include="Документация\Диаграммы\usecase2.png" />
 </ItemGroup>
 </Project>
