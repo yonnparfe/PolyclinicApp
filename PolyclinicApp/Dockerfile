@@ -6,13 +6,10 @@ WORKDIR /src
 
 
 COPY PolyclinicApp/PolyclinicApp.csproj PolyclinicApp/
-
-
 RUN nuget restore "PolyclinicApp/PolyclinicApp.csproj"
 
 
 COPY PolyclinicApp/. ./PolyclinicApp/
-
 
 WORKDIR /src/PolyclinicApp
 
