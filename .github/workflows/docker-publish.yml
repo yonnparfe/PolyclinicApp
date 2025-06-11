@@ -8,6 +8,7 @@ on:
 env:
   REPOSITORY: polyclinicapp
   BASE_IMAGE_TAG: 4.8-windowsservercore-ltsc2022
+  DOCKER_BUILDKIT: "0"
 
 jobs:
   build-and-push:
