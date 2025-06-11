@@ -1,21 +1,29 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+# syntax=docker/dockerfile:1.0
+
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022 AS build
+
 WORKDIR /src
 
 
-COPY ["PolyclinicApp/PolyclinicApp.csproj", "PolyclinicApp/"]
-COPY ["../OtherProject/OtherProject.csproj", "OtherProject/"]
+COPY PolyclinicApp/PolyclinicApp.csproj PolyclinicApp/
 
 
-RUN dotnet restore "PolyclinicApp/PolyclinicApp.csproj"
+RUN nuget restore "PolyclinicApp/PolyclinicApp.csproj"
 
 
-COPY . .
+COPY PolyclinicApp/. ./PolyclinicApp/
 
 
-WORKDIR "/src/PolyclinicApp"
-RUN dotnet publish "PolyclinicApp.csproj" -c Release -o /app/publish
+WORKDIR /src/PolyclinicApp
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
+
+RUN msbuild PolyclinicApp.csproj /p:Configuration=Release /p:OutputPath=C:\output /p:ValidateMarkup=false /p:DeployOnBuild=true /p:PublishProfile=FolderProfile
+
+FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2022
 WORKDIR /app
-COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "PolyclinicApp.dll"]
+
+
+COPY --from=build C:/output/ .
+
+
+ENTRYPOINT ["PolyclinicApp.exe"]
