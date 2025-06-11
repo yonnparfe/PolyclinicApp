@@ -74,9 +74,7 @@ local/
 tmp/
 temp/
 
-# 9. Docker and compose files
-Dockerfile*
-docker-compose*
+
 
 # 10. Connected Services (auto-generated)
 Connected Services/
