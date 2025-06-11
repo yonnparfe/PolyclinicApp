@@ -13,7 +13,6 @@ WORKDIR /app
 COPY --from=builder C:/out .
 COPY --from=builder C:/src/DataBase ./DataBase
 COPY --from=builder C:/src/*.config .
-COPY --from=builder C:/src/init.ps1 .
 
 ENV DISPLAY=host.docker.internal:0.0
 ENTRYPOINT ["powershell", "-ExecutionPolicy", "Bypass", "-File", ".\\init.ps1"]
