@@ -4,6 +4,15 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022 AS bu
 WORKDIR /src
 COPY . .
 
+RUN (for /f "delims=" %f in ('dir /s /b *.csproj') do ( \
+      echo Found project: %f && \
+      nuget restore "%f" \
+    )) && \
+    (for /f "delims=" %f in ('dir /s /b *.sln') do ( \
+      echo Found solution: %f && \
+      nuget restore "%f" \
+    ))
+    
 RUN nuget restore && \
     msbuild PolyclinicApp.csproj \
     /p:Configuration=Release \
