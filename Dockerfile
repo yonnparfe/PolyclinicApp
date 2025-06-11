@@ -12,7 +12,7 @@ WORKDIR /src/PolyclinicApp
 
 RUN nuget restore
 
-RUN msbuild PolyclinicApp.csproj \
+RUN msbuild PolyclinicApp/PolyclinicApp.csproj \
     /p:Configuration=Release \
     /p:OutputPath=C:\publish \
     /p:DeployOnBuild=true
