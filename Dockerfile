@@ -4,11 +4,18 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2022 AS bu
 
 WORKDIR /src
 
-COPY ["PolyclinicApp/PolyclinicApp.csproj", "PolyclinicApp/"]
+
+COPY PolyclinicApp/PolyclinicApp.csproj PolyclinicApp/
+
+
 RUN nuget restore "PolyclinicApp/PolyclinicApp.csproj"
 
-COPY . .
-RUN msbuild "PolyclinicApp/PolyclinicApp.csproj" \
+
+COPY PolyclinicApp/. ./PolyclinicApp/
+
+
+WORKDIR /src/PolyclinicApp
+RUN msbuild "PolyclinicApp.csproj" \
     /p:Configuration=Release \
     /p:OutputPath=C:\publish \
     /p:DeployOnBuild=true \
@@ -17,9 +24,12 @@ RUN msbuild "PolyclinicApp/PolyclinicApp.csproj" \
 FROM mcr.microsoft.com/dotnet/framework/runtime:4.8-windowsservercore-ltsc2022
 WORKDIR /app
 
+
 COPY --from=build C:/publish/ .
 
+
 COPY --from=build C:/src/PolyclinicApp/DataBase/ ./DataBase/
+
 
 RUN powershell -Command \
     Invoke-WebRequest -Uri https://download.microsoft.com/download/8/6/8/868E5C4A-15A6-4E1F-B4A0-DF3D6B57B4A2/ENU/x64/sqlncli.msi -OutFile sqlncli.msi; \
@@ -27,3 +37,4 @@ RUN powershell -Command \
     Remove-Item -Force sqlncli.msi
 
 ENTRYPOINT ["PolyclinicApp.exe"]
+
